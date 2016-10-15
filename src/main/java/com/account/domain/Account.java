@@ -8,8 +8,6 @@ public class Account {
 	@Id
 	private String id;
 
-	private String firstName;
-	private String lastName;
 	private String email;
 	private String userName;
 	private String password;
@@ -23,12 +21,10 @@ public class Account {
 		this.role = role;
 	}
 
-	public Account(String id, String firstName, String lastName, String userName,
+	public Account(String id, String userName,
 				String password, String email, String role) {
 		super();
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.email = email;
 		this.userName = userName;
 		this.password = password;
@@ -41,22 +37,6 @@ public class Account {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public String getEmail() {
