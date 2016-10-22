@@ -2,7 +2,7 @@
 
 /* Users Controller */
 
-ngApp.lazy.controller('accountsCtrl', function($scope, $log, $location, $http, AccountFactory) {
+ngApp.lazy.controller('accountsCtrl', function($scope, $log, $location, $http, AccountFactory, localStorageService) {
 	var vm = this;
 	vm.isLoading = false;
 	vm.showSignIn = 1;
@@ -14,10 +14,10 @@ ngApp.lazy.controller('accountsCtrl', function($scope, $log, $location, $http, A
 		AccountFactory.save(vm.obj, function (data) {
 			angular.extend(vm.obj, data);
 			vm.obj.message = data.message;
-			setUser(vm.obj);
+			authenticate ();
 		}, function (error) {
 			$log.log("Error: ", error);
-			changeLoadingState();
+
 		});
 
 	}
@@ -26,32 +26,22 @@ ngApp.lazy.controller('accountsCtrl', function($scope, $log, $location, $http, A
 		$http.post('/accounts/signin', vm.obj).success(function(data) {
 			angular.extend(vm.obj, data);
 			vm.obj.message = data.message;
-			setUser(vm.obj);
+			authenticate ();
 		}).error(function(error) {
 			$log.log("ERROR signin: ", error);
 		});
 	}
-
 
 	function authenticate () {
-		$log.log ("authenticate...");
 		$http.get('/accounts/').success(function(data) {
-			$log.log ("authenticate success: ", data);
+			localStorageService.set("user", data);
+			$scope.main.user = data;
+			return data;
 		}).error(function(error) {
-			$log.log("ERROR signin: ", error);
+			$log.log("ERROR authenticate: ", error);
+			localStorageService.remove("user");
+			$scope.main.user = {};
 		});
-	}
-
-	function setUser (data) {
-		authenticate ();
-		/*if (!data.isLoggedIn) {
-			data = {};
-		}
-		localStorageService.set("user", data)
-		MenuFactory.setUser(data);*/
-		/*if (data.isLoggedIn) {
-			$location.path('/groups');
-		}*/
 	}
 
 });
