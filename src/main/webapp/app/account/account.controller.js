@@ -23,7 +23,7 @@ ngApp.lazy.controller('accountsCtrl', function($scope, $log, $location, $http, A
 	}
 
 	function signin () {
-		$http.post('/accounts/signin', vm.obj).success(function(data) {
+		$http.post('/accounts/authenticate', vm.obj).success(function(data) {
 			angular.extend(vm.obj, data);
 			vm.obj.message = data.message;
 			authenticate ();

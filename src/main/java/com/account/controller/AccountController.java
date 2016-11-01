@@ -19,11 +19,6 @@ public class AccountController {
 	@Autowired
 	private AccountRepository accountRepository;
 
-
-	/*public AccountController(AccountRepository accountRepository) {
-		this.accountRepository = accountRepository;
-	}*/
-
 	@RequestMapping(
 			method = RequestMethod.POST,
 			headers="Accept=application/json",
@@ -40,12 +35,20 @@ public class AccountController {
 			produces="application/json"
 	)
 
-	public Account currentAccount(Principal principal) {
+	public Account getCurrentAccount(Principal principal) {
 		Assert.notNull(principal);
-		System.out.println("Principal name: " + principal.getName());
 		return accountRepository.findByEmail(principal.getName());
 	}
 
+	@RequestMapping(
+			value="/authenticate",
+			method = RequestMethod.POST,
+			headers="Accept=application/json",
+			produces="application/json"
+	)
+	public void authenticate(@RequestBody Account a) {
+		accountService.authenticate(a);
+	}
 
 
 }

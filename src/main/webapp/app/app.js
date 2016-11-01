@@ -1,5 +1,18 @@
 var ngApp = angular.module('ngApp', ['ngRoute', 'ngResource']);
 
+ngApp.controller('mainCtrl', function($scope, $http, $log, localStorageService) {
+
+	$scope.main = {
+		user: localStorageService.get("user")
+	};
+
+	$scope.logOut = function () {
+		localStorageService.remove("user");
+		$scope.main.user = {};
+	};
+
+});
+
 ngApp.config(function ($controllerProvider, $compileProvider, $filterProvider, $provide, $routeProvider, $httpProvider) {
 	
 	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
