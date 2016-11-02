@@ -33,8 +33,8 @@ public class AccountService implements UserDetailsService {
 
 	@PostConstruct
 	protected void initialize() {
-		save(new Account("user", "demo", "ROLE_USER"));
-		save(new Account("admin", "admin", "ROLE_ADMIN"));
+		//save(new Account("user", "demo", "ROLE_USER"));
+		//save(new Account("admin", "admin", "ROLE_ADMIN"));
 	}
 
 	@Transactional
@@ -43,19 +43,11 @@ public class AccountService implements UserDetailsService {
 		accountRepository.save(account);
 
 		if (account.getId() != null) {
-			authenticate(account);
+			signin(account);
 		}
 
 		return account;
 	}
-
-	/*public void authenticate(Account account) {
-		Authentication auth = new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword());
-		SecurityContextHolder.getContext().setAuthentication(auth);
-
-		System.out.println("\n\n\n\n\n\n\n\nAuth : " + auth.isAuthenticated() + " " + auth.toString());
-
-	}*/
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account account = accountRepository.findOneByEmail(username);
@@ -70,9 +62,7 @@ public class AccountService implements UserDetailsService {
 	}
 
 	private Authentication authenticate(Account account) {
-
 		Authentication auth = new  UsernamePasswordAuthenticationToken(createUser(account), null, Collections.singleton(createAuthority(account)));
-		System.out.println("\n\n\n\n\n\n\n\n Auth : " + auth.isAuthenticated() + " " + auth.toString());
 		return new UsernamePasswordAuthenticationToken(createUser(account), null, Collections.singleton(createAuthority(account)));
 	}
 
