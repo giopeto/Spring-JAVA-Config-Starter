@@ -52,7 +52,7 @@ public class AccountController {
 			headers="Accept=application/json",
 			produces="application/json"
 	)
-	public void authenticate(@RequestBody Account a) {
+	public void signin(@RequestBody Account a) {
 		accountService.signin(a);
 	}
 
