@@ -38,40 +38,23 @@ public class AccountController {
 			produces="application/json"
 	)
 	public Account getCurrentAccount(Principal principal) {
-
-		System.out.println("\n\n\n\n\nGet Current Account \n principal: " + principal  );
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		System.out.println("\n\n\n\n\n ############ auth: " + auth  + "\n To string: " + auth.toString() + " NAME IS : " + auth.getName());
-		User asd = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-
-		System.out.println("\n\n\n\n\n\n\n Usera: " + asd.toString());
-
-
-
-		//return accountRepository.findOneByEmail(auth.getName());
 		Assert.notNull(principal);
+
+		System.out.println("Principal: " + principal.toString() );
+
 		return accountRepository.findOneByEmail(principal.getName());
 	}
-	/*public Account getCurrentAccount(HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal();
-		System.out.println("\n\n\n\n\nprincipal: " + principal  );
-
-		Assert.notNull(principal);
-		return accountRepository.findOneByEmail(principal.getName());
-	}*/
 
 
-	/*@RequestMapping(
-			value="/authenticate",
+	@RequestMapping(
+			value="/signin",
 			method = RequestMethod.POST,
 			headers="Accept=application/json",
 			produces="application/json"
 	)
 	public void authenticate(@RequestBody Account a) {
-		accountService.authenticate(a);
-	}*/
+		accountService.signin(a);
+	}
 
 	@RequestMapping(value = "account/{id}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
