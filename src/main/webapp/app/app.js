@@ -11,13 +11,9 @@ ngApp.controller('mainCtrl', function($scope, $http, $log, localStorageService) 
 			localStorageService.remove("user");
 			$scope.main.user = {};
 		}).error(function(error) {
-			$log.log("ERROR authenticate: ", error);
+			$log.log("ERROR: ", error);
 			$scope.main.user = {};
 		});
-
-
-
-
 	};
 
 });
