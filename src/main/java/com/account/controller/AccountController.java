@@ -31,7 +31,7 @@ public class AccountController {
 		return accountService.save(a);
 	}
 
-	/*@Secured({"ROLE_USER", "1 ROLE_ADMIN"})*/
+	/*@Secured({"ROLE_USER", "ROLE_ADMIN"})*/
 	@RequestMapping(
 			method = RequestMethod.GET,
 			headers="Accept=application/json",
